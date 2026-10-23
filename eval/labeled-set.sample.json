@@ -1,0 +1,37 @@
+{
+  "_comment": "Small, structurally-faithful sample of design doc §15.1 — synthetic documents ingested fresh on every `python -m eval.run_eval` run, gold chunks resolved by (document title, text substring) rather than a fixed chunk id, since ids are generated at ingest time. Not the real 200-question production set.",
+  "documents": [
+    {
+      "title": "Acme Master Services Agreement 2024",
+      "text": "# Acme Master Services Agreement 2024\n\n## Section 1: Term\n\nThis Agreement begins on January 1, 2024 and continues for twelve months unless terminated earlier.\n\n## Section 4: Limitation of Liability\n\nSection 4.2 does not apply in the case of gross negligence or willful misconduct by either party.\n\n## Section 7: Termination\n\nEither party may terminate this Agreement for convenience with 30 days written notice. Early cancellation before the term ends requires a pro-rated refund of prepaid fees.\n\n## Section 9: Governing Law\n\nThis Agreement is governed by the laws of the State of Delaware."
+    },
+    {
+      "title": "Acme Data Processing Agreement",
+      "text": "# Acme Data Processing Agreement (DPA)\n\n## Section 2: Security Obligations\n\nThe Processor shall maintain SOC 2 Type II certification and provide evidence upon request.\n\n## Section 5: Data Breach Notification\n\nIn the event of a data breach, the Processor shall notify the Controller within 72 hours. The Controller's security team is responsible for coordinating the incident response."
+    },
+    {
+      "title": "Acme Invoice INV-2024-8871",
+      "text": "# Invoice INV-2024-8871\n\nBill To: Example Corp\n\nAmount Due: $12,450.00\n\nDue Date: March 15, 2024\n\nThis invoice covers professional services rendered under the Acme Master Services Agreement for the period of January 2024."
+    },
+    {
+      "title": "Acme Pricing Sheet 2024",
+      "text": "# Acme Pricing Sheet 2024\n\n## Plan Pricing\n\n| Plan | Monthly Price | Seats Included |\n| --- | --- | --- |\n| Starter | $99 | 5 |\n| Growth | $349 | 25 |\n| Enterprise | Custom | Unlimited |\n\nOverage beyond included seats is billed at $12 per seat per month."
+    },
+    {
+      "title": "Acme Employee Handbook Excerpt",
+      "text": "# Acme Employee Handbook\n\n## Remote Work Policy\n\nEmployees may work remotely up to 3 days per week with manager approval. Full-time remote arrangements require VP sign-off.\n\n## Expense Reimbursement\n\nReimbursable expenses must be submitted within 30 days with itemized receipts."
+    }
+  ],
+  "questions": [
+    { "question": "What happens if we cancel early?", "gold": [{ "documentTitle": "Acme Master Services Agreement 2024", "textContains": "pro-rated refund" }] },
+    { "question": "Who is responsible for coordinating a data breach incident response?", "gold": [{ "documentTitle": "Acme Data Processing Agreement", "textContains": "coordinating the incident response" }] },
+    { "question": "What is the amount due on invoice INV-2024-8871?", "gold": [{ "documentTitle": "Acme Invoice INV-2024-8871", "textContains": "$12,450.00" }] },
+    { "question": "Does the MSA limitation of liability apply to gross negligence?", "gold": [{ "documentTitle": "Acme Master Services Agreement 2024", "textContains": "gross negligence" }] },
+    { "question": "How much does the Growth plan cost per month?", "gold": [{ "documentTitle": "Acme Pricing Sheet 2024", "textContains": "Growth" }] },
+    { "question": "What governing law applies to the agreement?", "gold": [{ "documentTitle": "Acme Master Services Agreement 2024", "textContains": "State of Delaware" }] },
+    { "question": "How many days can employees work remotely?", "gold": [{ "documentTitle": "Acme Employee Handbook Excerpt", "textContains": "3 days per week" }] },
+    { "question": "Is SOC 2 Type II certification required?", "gold": [{ "documentTitle": "Acme Data Processing Agreement", "textContains": "SOC 2 Type II" }] },
+    { "question": "What is the deadline for expense reimbursement?", "gold": [{ "documentTitle": "Acme Employee Handbook Excerpt", "textContains": "within 30 days" }] },
+    { "question": "Who must be notified within 72 hours of a data breach?", "gold": [{ "documentTitle": "Acme Data Processing Agreement", "textContains": "within 72 hours" }] }
+  ]
+}

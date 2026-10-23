@@ -1,0 +1,53 @@
+x-app: &app
+  build: .
+  env_file: [.env]
+  environment:
+    MONGO_URI: mongodb://mongo:27017/lumen
+    REDIS_URL: redis://redis:6379
+    STORAGE_ROOT: /app/storage
+  volumes:
+    - lumen_storage:/app/storage
+  depends_on:
+    mongo: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  api:
+    <<: *app
+    ports: ["8000:8000"]
+
+  worker:
+    <<: *app
+    command: ["python", "-m", "lumen.ingestion.worker"]
+    deploy:
+      replicas: 1
+
+  ui:
+    <<: *app
+    command: ["streamlit", "run", "ui/streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    environment:
+      LUMEN_API_URL: http://api:8000
+      LUMEN_PUBLIC_API_URL: http://localhost:8000
+    ports: ["8501:8501"]
+    depends_on: [api]
+
+  mongo:
+    image: mongo:7
+    volumes: [lumen_mongo:/data/db]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    volumes: [lumen_redis:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  lumen_storage:
+  lumen_mongo:
+  lumen_redis:
