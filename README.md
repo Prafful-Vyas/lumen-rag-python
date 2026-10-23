@@ -131,9 +131,11 @@ Verified on Windows 10 with Python 3.12, MongoDB 7.0 and Redis 7.2 (Memurai):
   fusion working; on this tiny set Recall@5 is 100% by construction. Real retrieval quality needs
   `OPENAI_API_KEY` and a real labeled set.
 
-Not verified here: Docker images and docker-compose (no Docker on the development machine; CI
-builds the image and runs the smoke test in compose), the OpenAI adapters against the live API,
-MongoDB Atlas search indexes and S3.
+Verified in GitHub Actions (Ubuntu): lint, all 49 tests with Tesseract installed, the eval, and a
+Docker job that builds the image, boots `api`, `worker`, `mongo` and `redis` with docker compose,
+seeds the demo user and passes `scripts/smoke.py` (queued -> extracting -> chunking -> embedding -> ready).
+
+Not verified: the OpenAI adapters against the live API, MongoDB Atlas search indexes and S3.
 
 ## Known simplifications
 
